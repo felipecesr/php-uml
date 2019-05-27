@@ -1,0 +1,20 @@
+{
+    "name": "felipecesar/dockerised-php-master",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Felipe César",
+            "email": "jeanfelipecc@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Domain\\": "domain/",
+            "Resources\\": "resources/"
+        }
+    },
+    "require": {
+        "slim/slim": "^3.12"
+    }
+}
