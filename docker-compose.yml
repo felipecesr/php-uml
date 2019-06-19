@@ -14,4 +14,10 @@ services:
   php:
     image: php:fpm-alpine
     volumes:
-      - ./app:/app
+      - ${APPLICATION}:/app
+
+  composer:
+    image: composer/composer:alpine
+    command: install
+    volumes:
+      - ${APPLICATION}:/app
