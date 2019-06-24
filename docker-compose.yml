@@ -12,12 +12,32 @@ services:
       - php
 
   php:
-    image: php:fpm-alpine
+    restart: always
+    build:
+      context: .
+      args:
+        - INSTALL_PDO_MYSQL=${PHP_FPM_INSTALL_PDO_MYSQL}
+        - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
     volumes:
       - ${APPLICATION}:/app
+    # environment:
+    #   XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
 
   composer:
     image: composer/composer:alpine
     command: install
     volumes:
       - ${APPLICATION}:/app
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3000:8080

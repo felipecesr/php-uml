@@ -11,7 +11,9 @@
     "autoload": {
         "psr-4": {
             "Domain\\": "domain/",
-            "Resources\\": "resources/"
+            "Resources\\": "resources/",
+            "Repositories\\": "repositories/",
+            "Services\\": "services/"
         }
     },
     "require": {
