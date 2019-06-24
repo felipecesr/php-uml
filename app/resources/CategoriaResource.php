@@ -3,18 +3,19 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Domain\Categoria;
+use Services\CategoriaService;
 
 return function (App $app) {
-    $app->get('/categorias', function (Request $request, Response $response) {
-        $cat1 = new Categoria(1, 'Informatica');
-        $cat2 = new Categoria(2, 'Escritorio');
+    $app->get('/categorias/{id}', function (Request $request, Response $response, $args) {
+        $service = new CategoriaService();
+        $obj = $service->buscar($args['id']);
 
-        $lista = array();
-        array_push($lista, $cat1, $cat2);
+        // $cat = new Categoria(1, $obj);
 
-        $newResponse = $response->withJson($lista);
-
-        return $newResponse;
+        // $lista = array();
+        // array_push($lista, $cat);
+phpinfo();
+        // $newResponse = $response->withJson($obj);
+        // return $newResponse;
     });
 };
