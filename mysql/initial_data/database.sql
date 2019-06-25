@@ -1,4 +1,7 @@
--- Adminer 4.7.1 MySQL dump
+CREATE DATABASE `blog`;
+USE `blog`;
+
+DROP TABLE IF EXISTS `categorias`;
 
 CREATE TABLE IF NOT EXISTS categorias (
     id INT AUTO_INCREMENT,
@@ -9,5 +12,3 @@ CREATE TABLE IF NOT EXISTS categorias (
 INSERT INTO categorias (id, nome) VALUES
 (1, 'Informatica'),
 (2, 'Escritorio');
-
--- 2019-06-20 20:20:30
