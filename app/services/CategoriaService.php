@@ -11,7 +11,7 @@ class CategoriaService
     {
         $repo = new CategoriaRepository();
         $obj = $repo->findOne($id);
-        $obj2 = new Categoria($obj[0], $obj[1]);
+        $obj2 = new Categoria($obj['id'], $obj['nome']);
         return $obj2;
     }
 }

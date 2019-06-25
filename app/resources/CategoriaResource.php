@@ -10,12 +10,7 @@ return function (App $app) {
         $service = new CategoriaService();
         $obj = $service->buscar($args['id']);
 
-        // $cat = new Categoria(1, $obj);
-
-        // $lista = array();
-        // array_push($lista, $cat);
-phpinfo();
-        // $newResponse = $response->withJson($obj);
-        // return $newResponse;
+        $newResponse = $response->withJson($obj);
+        return $newResponse;
     });
 };
