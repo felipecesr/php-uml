@@ -1,9 +1,7 @@
 FROM php:7.3-fpm
 
-RUN apt-get update -y && \
-    apt-get install -y \
-    curl \
-    git
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git
 
 #####################################
 # PDO_MYSQL:
