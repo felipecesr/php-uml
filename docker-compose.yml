@@ -12,20 +12,12 @@ services:
       - php
 
   php:
-    restart: always
     build:
       context: .
       args:
         - INSTALL_PDO_MYSQL=${PHP_FPM_INSTALL_PDO_MYSQL}
         - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
-    volumes:
-      - ${APPLICATION}:/app
-    # environment:
-    #   XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
-
-  composer:
-    image: composer/composer:alpine
-    command: install
+        - INSTALL_COMPOSER=${PHP_FPM_INSTALL_COMPOSER}
     volumes:
       - ${APPLICATION}:/app
 
