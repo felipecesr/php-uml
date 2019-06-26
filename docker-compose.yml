@@ -12,12 +12,7 @@ services:
       - php
 
   php:
-    build:
-      context: .
-      args:
-        - INSTALL_PDO_MYSQL=${PHP_FPM_INSTALL_PDO_MYSQL}
-        - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
-        - INSTALL_COMPOSER=${PHP_FPM_INSTALL_COMPOSER}
+    build: .
     volumes:
       - ${APPLICATION}:/app
 

@@ -3,38 +3,17 @@ FROM php:7.3-fpm
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git
 
-#####################################
-# PDO_MYSQL:
-#####################################
+# Install pdo_mysql
+RUN docker-php-ext-install pdo_mysql
 
-ARG INSTALL_PDO_MYSQL=false
-RUN if [ ${INSTALL_PDO_MYSQL} = true ]; then \
-    # Install pdo_mysql
-    docker-php-ext-install pdo_mysql \
-    ;fi
-
-#####################################
-# xdebug:
-#####################################
-
-ARG INSTALL_XDEBUG=false
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # Install the xdebug
-    pecl install xdebug-2.7.2 \
-    && docker-php-ext-enable xdebug \
-    ;fi
+# Install the xdebug
+RUN pecl install xdebug-2.7.2 \
+    && docker-php-ext-enable xdebug
 
 # Copy xdebug configuration
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-#####################################
-# composer:
-#####################################
-
-ARG INSTALL_COMPOSER=false
-RUN if [ ${INSTALL_COMPOSER} = true ]; then \
-    # Install the composer
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    ;fi
+# Install the composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 EXPOSE 9000
