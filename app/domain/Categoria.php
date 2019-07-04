@@ -7,6 +7,8 @@ class Categoria implements \JsonSerializable
     private $id;
     private $nome;
 
+    private $produtos = array();
+
     public function __construct(int $id, string $nome)
     {
         $this->id = $id;
@@ -33,12 +35,23 @@ class Categoria implements \JsonSerializable
         $this->nome = $nome;
     }
 
+    public function getProdutos()
+    {
+        return $this->produtos;
+    }
+
+    public function setProdutos($produtos)
+    {
+        $this->produtos = $produtos;
+    }
+
     public function jsonSerialize()
     {
         return
             [
                 'id'   => $this->getId(),
-                'nome' => $this->getNome()
+                'nome' => $this->getNome(),
+                'produtos' => $this->getProdutos()
             ];
     }
 }
