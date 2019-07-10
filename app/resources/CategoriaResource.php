@@ -1,16 +1,22 @@
 <?php
 
-use Slim\App;
-use Slim\Http\Request;
-use Slim\Http\Response;
 use Services\CategoriaService;
 
-return function (App $app) {
-    $app->get('/categorias/{id}', function (Request $request, Response $response, $args) {
-        $service = new CategoriaService();
-        $obj = $service->buscar($args['id']);
+if (strpos($url, "/") !== 0) {
+    $url = "/$url";
+}
 
-        $newResponse = $response->withJson($obj);
-        return $newResponse;
-    });
-};
+header("Content-Type:application/json");
+
+if ($url == '/categorias' && $_SERVER['REQUEST_METHOD'] == 'GET') {
+    $service = new CategoriaService();
+    $result = $service->listar();
+    echo json_encode($result);
+}
+
+if (preg_match("/categorias\/([0-9])+/", $url, $matches) && $_SERVER['REQUEST_METHOD'] == 'GET') {
+    $postId = $matches[1];
+    $service = new CategoriaService();
+    $result = $service->buscar($postId);
+    echo json_encode($result);
+}

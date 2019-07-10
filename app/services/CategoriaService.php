@@ -7,6 +7,13 @@ use Repositories\CategoriaRepository;
 
 class CategoriaService
 {
+    public function listar()
+    {
+        $repo = new CategoriaRepository();
+        $result = $repo->findAll();
+        return $result;
+    }
+
     public function buscar(int $id) : Categoria
     {
         $repo = new CategoriaRepository();
