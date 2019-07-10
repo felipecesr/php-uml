@@ -7,7 +7,7 @@ class Categoria implements \JsonSerializable
     private $id;
     private $nome;
 
-    private $produtos = array();
+    private $produtos = [];
 
     public function __construct(int $id, string $nome)
     {

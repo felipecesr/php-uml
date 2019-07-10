@@ -6,7 +6,7 @@ class Estado implements \JsonSerializable
 {
     private $id;
     private $nome;
-    private $cidades = array();
+    private $cidades = [];
 
     public function __construct(int $id, string $nome)
     {

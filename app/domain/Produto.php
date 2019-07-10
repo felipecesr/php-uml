@@ -8,7 +8,7 @@ class Produto implements \JsonSerializable
     private $nome;
     private $preco;
 
-    private $categorias = array();
+    private $categorias = [];
 
     public function __construct(int $id, string $nome, float $preco)
     {
