@@ -15,8 +15,5 @@
             "Repositories\\": "repositories/",
             "Services\\": "services/"
         }
-    },
-    "require": {
-        "slim/slim": "^3.12"
     }
 }
