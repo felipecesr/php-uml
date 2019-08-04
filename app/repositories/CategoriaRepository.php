@@ -26,14 +26,9 @@ class CategoriaRepository
             'id' => $id
         ];
 
-        $queryCategorias = 'SELECT * FROM `categorias` WHERE `id` = :id';
-        $categorias = $this->db->query($queryCategorias, $parameters)->fetch();
+        $query = 'SELECT p.id produto_id, p.nome produto_nome, p.preco produto_preco, c.id categoria_id, c.nome categoria_nome FROM produtos p INNER JOIN produtos_categorias j ON p.id = j.produto_id INNER JOIN categorias c ON j.categoria_id = c.id WHERE c.id = :id';
+        $result = $this->db->query($query, $parameters)->fetchAll();
 
-        $queryProdutos = 'SELECT p.id, p.nome, p.preco FROM produtos p, produtos_categorias j WHERE p.id = j.produto_id AND j.categoria_id = :id';
-        $produtos = $this->db->query($queryProdutos, $parameters)->fetchAll();
-
-        $categorias["produtos"] = $produtos;
-
-        return $categorias;
+        return $result;
     }
 }

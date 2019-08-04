@@ -16,10 +16,21 @@ class CategoriaService
 
     public function buscar(int $id) : Categoria
     {
-        $repo = new CategoriaRepository();
-        $obj = $repo->findOne($id);
-        $obj2 = new Categoria($obj['id'], $obj['nome']);
-        $obj2->setProdutos($obj['produtos']);
+        $repository = new CategoriaRepository();
+        $categoria = $repository->findOne($id);
+        $produtos = [];
+
+        foreach ($categoria as $key => $value) {
+            $produtos[] = array(
+                "id" => $value["produto_id"],
+                "nome" => $value["produto_nome"],
+                "preco" => $value["produto_preco"]
+            );
+        }
+
+
+        $obj2 = new Categoria($categoria[0]['categoria_id'], $categoria[0]['categoria_nome']);
+        $obj2->setProdutos($produtos);
         return $obj2;
     }
 }
