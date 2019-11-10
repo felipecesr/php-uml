@@ -1,13 +1,12 @@
 <?php
 
-namespace Domain;
+namespace Entity;
 
-class Categoria implements \JsonSerializable
+class Estado implements \JsonSerializable
 {
     private $id;
     private $nome;
-
-    private $produtos = [];
+    private $cidades = [];
 
     public function __construct(int $id, string $nome)
     {
@@ -35,14 +34,14 @@ class Categoria implements \JsonSerializable
         $this->nome = $nome;
     }
 
-    public function getProdutos()
+    public function getCidades()
     {
-        return $this->produtos;
+        return $this->cidades;
     }
 
-    public function setProdutos($produtos)
+    public function setCidades(array $cidades)
     {
-        $this->produtos = $produtos;
+        $this->cidades = $cidades;
     }
 
     public function jsonSerialize()
@@ -51,7 +50,7 @@ class Categoria implements \JsonSerializable
             [
                 'id'   => $this->getId(),
                 'nome' => $this->getNome(),
-                'produtos' => $this->getProdutos()
+                'cidades' => $this->getCidades()
             ];
     }
 }

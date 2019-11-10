@@ -1,22 +1,22 @@
 <?php
 
-namespace Services;
+namespace Controller;
 
-use Domain\Categoria;
-use Repositories\CategoriaRepository;
+use Entity\Categoria;
+use Infra\CategoriaInfra;
 
-class CategoriaService
+class CategoriaController
 {
     public function listar()
     {
-        $repo = new CategoriaRepository();
+        $repo = new CategoriaInfra();
         $result = $repo->findAll();
         return $result;
     }
 
     public function buscar(int $id) : Categoria
     {
-        $repository = new CategoriaRepository();
+        $repository = new CategoriaInfra();
         $categoria = $repository->findOne($id);
         $produtos = [];
 

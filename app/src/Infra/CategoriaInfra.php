@@ -1,10 +1,10 @@
 <?php
 
-namespace Repositories;
+namespace Infra;
 
-require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../../core/Database.php';
 
-class CategoriaRepository
+class CategoriaInfra
 {
     private $db;
     private $table = 'categorias';

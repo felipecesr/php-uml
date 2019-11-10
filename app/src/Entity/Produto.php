@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain;
+namespace Entity;
 
 class Produto implements \JsonSerializable
 {

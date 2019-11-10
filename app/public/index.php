@@ -1,13 +1,11 @@
 <?php
 
+use Controller\CategoriaController;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-// Register routes
-require __DIR__.'/../core/Router.php';
-require __DIR__.'/../routes.php';
-$router = new Router;
-$router->setRoutes($routes);
-
-$url = $_SERVER['REQUEST_URI'];
-
-require __DIR__ . '/../resources/' . $router->getFileName($url);
+if ($_SERVER['REQUEST_URI'] === '/categorias' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    $controller = new CategoriaController();
+    $result = $controller->listar();
+    echo json_encode($result);
+}

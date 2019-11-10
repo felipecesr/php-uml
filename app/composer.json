@@ -10,10 +10,9 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Domain\\": "domain/",
-            "Resources\\": "resources/",
-            "Repositories\\": "repositories/",
-            "Services\\": "services/"
+            "Entity\\": "src/Entity/",
+            "Infra\\": "src/Infra/",
+            "Controller\\": "src/Controller/"
         }
     }
 }

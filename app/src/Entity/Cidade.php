@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain;
+namespace Entity;
 
 class Cidade implements \JsonSerializable
 {
