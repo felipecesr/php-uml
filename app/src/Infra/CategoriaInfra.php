@@ -2,7 +2,7 @@
 
 namespace Infra;
 
-require __DIR__ . '/../../core/Database.php';
+require __DIR__ . '/../../config/Database.php';
 
 class CategoriaInfra
 {
