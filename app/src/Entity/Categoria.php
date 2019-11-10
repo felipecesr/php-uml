@@ -15,32 +15,27 @@ class Categoria implements \JsonSerializable
         $this->nome = $nome;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getNome()
+    public function getNome(): string
     {
         return $this->nome;
     }
 
-    public function setNome($nome)
+    public function setNome(string $nome)
     {
         $this->nome = $nome;
     }
 
-    public function getProdutos()
+    public function getProdutos(): array
     {
         return $this->produtos;
     }
 
-    public function setProdutos($produtos)
+    public function setProdutos(array $produtos)
     {
         $this->produtos = $produtos;
     }

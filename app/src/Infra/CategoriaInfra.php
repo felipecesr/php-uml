@@ -7,7 +7,6 @@ require __DIR__ . '/../../config/Database.php';
 class CategoriaInfra
 {
     private $db;
-    private $table = 'categorias';
 
     public function __construct()
     {
@@ -16,11 +15,12 @@ class CategoriaInfra
 
     public function findAll()
     {
-        $result = $this->db->query('SELECT * FROM `' . $this->table . '`');
+        $sql = 'SELECT * FROM categorias;';
+        $result = $this->db->query($sql);
         return $result->fetchAll();
     }
 
-    public function findOne(int $id)
+    public function find(int $id)
     {
         $parameters = [
             'id' => $id
