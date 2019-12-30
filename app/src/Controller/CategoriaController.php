@@ -1,36 +1,37 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
-use Entity\Categoria;
-use Infra\CategoriaInfra;
+use App\Domain\Categoria;
+use App\Repository\CategoriaRepository;
 
 class CategoriaController
 {
-    public function listar()
+    private $categoriaRepository;
+
+    public function __construct()
     {
-        $repo = new CategoriaInfra();
-        $result = $repo->findAll();
-        return $result;
+        $this->categoriaRepository = new CategoriaRepository();
     }
 
-    public function buscar(int $id) : Categoria
+    public function create()
     {
-        $repository = new CategoriaInfra();
-        $categoria = $repository->findOne($id);
-        $produtos = [];
+        $nome = $_POST['nome'];
+        $categoria = new Categoria($nome);
+        $this->categoriaRepository->add($categoria);
+        return $categoria;
+    }
 
-        foreach ($categoria as $key => $value) {
-            $produtos[] = array(
-                "id" => $value["produto_id"],
-                "nome" => $value["produto_nome"],
-                "preco" => $value["produto_preco"]
-            );
-        }
+    public function insert()
+    {
+        $nome = $_POST['nome'];
+        $result = $this->categoriaRepository->insert($nome);
+        echo json_encode($result);
+    }
 
-
-        $obj2 = new Categoria($categoria[0]['categoria_id'], $categoria[0]['categoria_nome']);
-        $obj2->setProdutos($produtos);
-        return $obj2;
+    public function listar()
+    {
+        $result = $this->categoriaRepository->findAll();
+        echo json_encode($result);
     }
 }

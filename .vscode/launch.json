@@ -10,7 +10,7 @@
             "request": "launch",
             "port": 9000,
             "pathMappings": {
-                "/app": "${workspaceFolder}/app"
+                "/var/www/html": "${workspaceFolder}/app"
             }
         },
         {

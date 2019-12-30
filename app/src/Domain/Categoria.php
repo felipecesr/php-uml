@@ -1,23 +1,15 @@
 <?php
 
-namespace Entity;
+namespace App\Domain;
 
 class Categoria implements \JsonSerializable
 {
-    private $id;
     private $nome;
-
     private $produtos = [];
 
-    public function __construct(int $id, string $nome)
+    public function __construct(string $nome)
     {
-        $this->id = $id;
         $this->nome = $nome;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getNome(): string
@@ -44,7 +36,6 @@ class Categoria implements \JsonSerializable
     {
         return
             [
-                'id'   => $this->getId(),
                 'nome' => $this->getNome(),
                 'produtos' => $this->getProdutos()
             ];

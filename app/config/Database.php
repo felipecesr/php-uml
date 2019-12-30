@@ -26,4 +26,38 @@ class Database
         $query->execute($parameters);
         return $query;
     }
+
+    public function findById($table, $primaryKey, $value)
+    {
+        $query = 'SELECT * FROM `' . $table . '` WHERE `' . $primaryKey . '` = :value';
+
+        $parameters = [
+            'value' => $value
+        ];
+
+        $query = $this->query($query, $parameters);
+
+        return $query->fetch();
+    }
+
+    private function insert($table, $fields)
+    {
+        $query = 'INSERT INTO `' . $table . '` (';
+
+        foreach ($fields as $key => $value) {
+            $query .= '`' . $key . '`,';
+        }
+
+        $query = rtrim($query, ',');
+
+        $query .= ')';
+
+        $fields = $this->processDates($fields);
+
+        $this->query($query, $fields);
+    }
+
+    private function processDates($fields)
+    {
+    }
 }

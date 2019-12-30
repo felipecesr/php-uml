@@ -10,9 +10,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Entity\\": "src/Entity/",
-            "Infra\\": "src/Infra/",
-            "Controller\\": "src/Controller/"
+            "App\\": "src/"
         }
     }
 }
