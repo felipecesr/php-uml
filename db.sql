@@ -1,0 +1,12 @@
+CREATE TABLE categorias (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE produtos (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    preco FLOAT(10,2),
+    PRIMARY KEY (id)
+);

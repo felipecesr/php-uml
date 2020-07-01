@@ -1,20 +1,21 @@
 <?php
 
-namespace Entity;
+namespace App\Domain;
 
-class Estado implements \JsonSerializable
+class Cidade implements \JsonSerializable
 {
-    private $id;
-    private $nome;
-    private $cidades = [];
+    private ?int $id;
+    private string $nome;
+    private Estado $estado;
 
-    public function __construct(int $id, string $nome)
+    public function __construct(?int $id, string $nome, Estado $estado)
     {
         $this->id = $id;
         $this->nome = $nome;
+        $this->estado = $estado;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -34,14 +35,14 @@ class Estado implements \JsonSerializable
         $this->nome = $nome;
     }
 
-    public function getCidades()
+    public function getEstado()
     {
-        return $this->cidades;
+        return $this->estado;
     }
 
-    public function setCidades(array $cidades)
+    public function setEstado($estado)
     {
-        $this->cidades = $cidades;
+        $this->estado = $estado;
     }
 
     public function jsonSerialize()
@@ -50,7 +51,7 @@ class Estado implements \JsonSerializable
             [
                 'id'   => $this->getId(),
                 'nome' => $this->getNome(),
-                'cidades' => $this->getCidades()
+                'estado' => $this->getEstado()
             ];
     }
 }
