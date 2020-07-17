@@ -6,10 +6,13 @@ use PDO;
 
 class ConnectionFactory
 {
-    public function createConnection(): PDO
+    public static function createConnection(): PDO
     {
-        $path = __DIR__ . '/bd.sqlite';
-        $pdo = new PDO('sqlite:' . $path);
-        return $pdo;
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ];
+
+        return new PDO('mysql:host=db;dbname=test;charset=utf8', 'root', 'secret', $options);
     }
 }

@@ -18,7 +18,7 @@ COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Install the composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY ./app/composer*.json ./
+COPY ./composer*.json ./
 RUN composer dump-autoload
 
 EXPOSE 9000

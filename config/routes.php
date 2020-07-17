@@ -1,12 +1,20 @@
 <?php
 
-use App\Controller\CidadeController;
+use App\Controller\CategoriaController;
 
 $routes = [
-    '/cidades' => [
+    '/categorias' => [
         'GET' => [
-            'controller' => CidadeController::class,
-            'action' => 'list'
+            'controller' => CategoriaController::class,
+            'action'     => 'list'
+        ],
+        'POST' => [
+            'controller' => CategoriaController::class,
+            'action'     => 'insert'
+        ],
+        'DELETE' => [
+            'controller' => CategoriaController::class,
+            'action'     => 'remove'
         ]
     ]
 ];
