@@ -16,9 +16,18 @@ class CategoryController
         $this->categoryRepository = new CategoryRepository();
     }
 
-    public function list(Request $request, Response $response): Response
+    public function findAll(Request $request, Response $response): Response
     {
         $data = $this->categoryRepository->allCategories();
+        $payload = json_encode($data);
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function findById(Request $request, Response $response, $args): Response
+    {
+        $data = $this->categoryRepository->findById($args['id']);
         $payload = json_encode($data);
 
         $response->getBody()->write($payload);

@@ -38,24 +38,24 @@ class CategoryRepository implements ICategoryRepository
         return $categorias;
     }
 
-    public function insert(Category $categoria)
+    public function insert(Category $category)
     {
         $query = 'INSERT INTO categorias (nome) VALUES (:nome)';
         $stmt = $this->connection->prepare($query);
 
         return $stmt->execute([
-            ':nome' => $categoria->getName()
+            ':nome' => $category->getName()
         ]);
     }
 
-    public function update(Category $categoria)
+    public function update(Category $category)
     {
-        $query = 'UPDATE categorias SET nome = :nome WHERE id = :id';
+        $query = 'UPDATE categorias SET nome = :name WHERE id = :id';
         $stmt = $this->connection->prepare($query);
 
         $data = $stmt->execute([
-            ':id'   => $categoria->id,
-            ':nome' => $categoria->getName()
+            ':id'   => $category->id,
+            ':name' => $category->getName()
         ]);
 
         return $data;
@@ -79,8 +79,8 @@ class CategoryRepository implements ICategoryRepository
                          produtos.nome as produto_nome,
                          produtos.preco
                     FROM categorias
-                    INNER JOIN produtos_categorias ON produtos_categorias.categoria_id = categorias.id
-                    INNER JOIN produtos ON produtos_categorias.produto_id = produtos.id';
+                    LEFT JOIN produtos_categorias ON produtos_categorias.categoria_id = categorias.id
+                    LEFT JOIN produtos ON produtos_categorias.produto_id = produtos.id';
         $stmt = $this->connection->query($query);
         $result = $stmt->fetchAll();
         $categories = [];
@@ -93,15 +93,57 @@ class CategoryRepository implements ICategoryRepository
                 );
             }
 
-            $product = new Product(
-                $row['produto_id'],
-                $row['produto_nome'],
-                $row['preco']
-            );
+            if ($row['produto_id']) {
+                $product = new Product(
+                    $row['produto_id'],
+                    $row['produto_nome'],
+                    $row['preco']
+                );
 
-            $categories[$row['id']]->addProduct($product);
+                $categories[$row['id']]->addProduct($product);
+            }
         }
 
         return array_merge($categories);
+    }
+
+    public function findById(int $id)
+    {
+        $query = 'SELECT categorias.id,
+                         categorias.nome,
+                         produtos.id as produto_id,
+                         produtos.nome as produto_nome,
+                         produtos.preco
+                    FROM categorias
+                    LEFT JOIN produtos_categorias ON produtos_categorias.categoria_id = categorias.id
+                    LEFT JOIN produtos ON produtos_categorias.produto_id = produtos.id
+                    WHERE categorias.id = :id';
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        $category = null;
+
+        foreach ($result as $row) {
+            if (!$category) {
+                $category = new Category(
+                    $row['id'],
+                    $row['nome']
+                );
+            }
+
+            if ($row['produto_id']) {
+                $product = new Product(
+                    $row['produto_id'],
+                    $row['produto_nome'],
+                    $row['preco']
+                );
+
+                $category->addProduct($product);
+            }
+        }
+
+        return $category;
     }
 }
