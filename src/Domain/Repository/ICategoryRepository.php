@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Domain;
-
-use App\Domain\Categoria;
+namespace App\Domain\Repository;
 
 interface ICategoryRepository
 {

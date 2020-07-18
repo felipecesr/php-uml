@@ -1,14 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use Slim\Factory\AppFactory;
 
-$route = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
+require __DIR__ . '/../vendor/autoload.php';
+
+$app = AppFactory::create();
+
 $routes = require __DIR__ . '/../config/routes.php';
+$routes($app);
 
-var_dump(array_key_exists($route, $routes)); die;
-
-$controller = new $routes[$route][$method]['controller']();
-$action = $routes[$route][$method]['action'];
-
-$controller->$action();
+$app->run();

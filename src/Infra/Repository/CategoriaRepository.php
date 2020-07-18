@@ -2,8 +2,8 @@
 
 namespace App\Infra\Repository;
 
-use App\Domain\Categoria;
-use App\Domain\ICategoryRepository;
+use App\Domain\Model\Categoria;
+use App\Domain\Repository\ICategoryRepository;
 use App\Infra\Persistence\ConnectionFactory;
 
 class CategoriaRepository implements ICategoryRepository
@@ -60,12 +60,13 @@ class CategoriaRepository implements ICategoryRepository
         return $data;
     }
 
-    public function remove($id)
+    public function remove(int $id)
     {
-        $query = 'DELETE FROM categorias WHERE id = ?';
+        $query = 'DELETE FROM categorias WHERE id = :id';
         $stmt = $this->connection->prepare($query);
-        $stmt->bindValue($id, \PDO::PARAM_INT);
 
-        return $stmt->execute();
+        return $stmt->execute([
+            ':id'   => $id
+        ]);
     }
 }

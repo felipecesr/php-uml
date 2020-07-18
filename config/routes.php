@@ -1,22 +1,10 @@
 <?php
 
 use App\Controller\CategoriaController;
+use Slim\App;
 
-$routes = [
-    '/categorias' => [
-        'GET' => [
-            'controller' => CategoriaController::class,
-            'action'     => 'list'
-        ],
-        'POST' => [
-            'controller' => CategoriaController::class,
-            'action'     => 'insert'
-        ],
-        'DELETE' => [
-            'controller' => CategoriaController::class,
-            'action'     => 'remove'
-        ]
-    ]
-];
-
-return $routes;
+return function (App $app) {
+    $app->get('/categorias', CategoriaController::class . ':list');
+    $app->post('/categorias', CategoriaController::class . ':insert');
+    $app->delete('/categorias/{id}', CategoriaController::class . ':remove');
+};
