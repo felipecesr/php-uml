@@ -2,23 +2,23 @@
 
 namespace App\Controller;
 
-use App\Domain\Model\Categoria;
-use App\Infra\Repository\CategoriaRepository;
+use App\Domain\Model\Category;
+use App\Infra\Repository\CategoryRepository;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-class CategoriaController
+class CategoryController
 {
-    private $categoriaRepository;
+    private $categoryRepository;
 
     public function __construct()
     {
-        $this->categoriaRepository = new CategoriaRepository();
+        $this->categoryRepository = new CategoryRepository();
     }
 
     public function list(Request $request, Response $response): Response
     {
-        $data = $this->categoriaRepository->allCategories();
+        $data = $this->categoryRepository->allCategories();
         $payload = json_encode($data);
 
         $response->getBody()->write($payload);
@@ -28,16 +28,16 @@ class CategoriaController
     public function insert(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
-        $categoria = new Categoria(null, $data['name']);
-        $this->categoriaRepository->insert($categoria);
-        $response->getBody()->write(json_encode($categoria));
+        $category = new Category(null, $data['name']);
+        $this->categoryRepository->insert($category);
+        $response->getBody()->write(json_encode($category));
         return $response;
     }
 
     public function remove(Request $request, Response $response, $args): Response
     {
         $id = intval($args['id']);
-        $this->categoriaRepository->remove($id);
+        $this->categoryRepository->remove($id);
         return $response;
     }
 }
