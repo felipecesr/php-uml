@@ -5,15 +5,14 @@ namespace App\Infra\Repository;
 use App\Domain\Model\Category;
 use App\Domain\Model\Product;
 use App\Domain\Repository\ICategoryRepository;
-use App\Infra\Persistence\ConnectionFactory;
 
 class CategoryRepository implements ICategoryRepository
 {
     private \PDO $connection;
 
-    public function __construct()
+    public function __construct(\PDO $connection)
     {
-        $this->connection = ConnectionFactory::createConnection();
+        $this->connection = $connection;
     }
 
     public function _allCategories(): array

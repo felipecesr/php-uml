@@ -19,6 +19,7 @@
     },
     "require": {
         "slim/slim": "^4.0",
-        "slim/psr7": "dev-master"
+        "slim/psr7": "dev-master",
+        "php-di/php-di": "dev-master"
     }
 }

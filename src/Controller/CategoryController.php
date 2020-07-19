@@ -3,22 +3,22 @@
 namespace App\Controller;
 
 use App\Domain\Model\Category;
-use App\Infra\Repository\CategoryRepository;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use App\Domain\Repository\ICategoryRepository;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface  as Request;
 
 class CategoryController
 {
-    private $categoryRepository;
+    private $repository;
 
-    public function __construct()
+    public function __construct(ICategoryRepository $repository)
     {
-        $this->categoryRepository = new CategoryRepository();
+        $this->repository = $repository;
     }
 
     public function findAll(Request $request, Response $response): Response
     {
-        $data = $this->categoryRepository->allCategories();
+        $data = $this->repository->allCategories();
         $payload = json_encode($data);
 
         $response->getBody()->write($payload);
@@ -27,7 +27,7 @@ class CategoryController
 
     public function findById(Request $request, Response $response, $args): Response
     {
-        $data = $this->categoryRepository->findById($args['id']);
+        $data = $this->repository->findById($args['id']);
         $payload = json_encode($data);
 
         $response->getBody()->write($payload);
@@ -38,7 +38,7 @@ class CategoryController
     {
         $data = $request->getParsedBody();
         $category = new Category(null, $data['name']);
-        $this->categoryRepository->insert($category);
+        $this->repository->insert($category);
         $response->getBody()->write(json_encode($category));
         return $response;
     }
@@ -46,7 +46,7 @@ class CategoryController
     public function remove(Request $request, Response $response, $args): Response
     {
         $id = intval($args['id']);
-        $this->categoryRepository->remove($id);
+        $this->repository->remove($id);
         return $response;
     }
 }
