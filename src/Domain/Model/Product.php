@@ -17,14 +17,15 @@ class Product implements \JsonSerializable
         $this->categories = [];
     }
 
-    public function getCategories()
+    /** @return Category[] */
+    public function getCategories(): array
     {
         return $this->categories;
     }
 
-    public function setCategories($categories)
+    public function addCategory(Category $category): void
     {
-        $this->categories = $categories;
+        $this->categories[] = $category;
     }
 
     public function jsonSerialize()
@@ -33,8 +34,7 @@ class Product implements \JsonSerializable
             [
                 'id'   => $this->id,
                 'name' => $this->name,
-                'price' => $this->price,
-                'categories' => $this->categories
+                'price' => $this->price
             ];
     }
 }
