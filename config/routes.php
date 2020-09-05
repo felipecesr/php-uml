@@ -3,9 +3,35 @@
 use App\Controller\CategoryController;
 use Slim\App;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Routing\RouteCollectorProxy;
+
+class JsonBodyParserMiddleware implements MiddlewareInterface
+{
+    public function process(Request $request, RequestHandler $handler): Response
+    {
+        $contentType = $request->getHeaderLine('Content-Type');
+
+        if (strstr($contentType, 'application/json')) {
+            $contents = json_decode(file_get_contents('php://input'), true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $request = $request->withParsedBody($contents);
+            }
+        }
+
+        return $handler->handle($request);
+    }
+}
+
 return function (App $app) {
-    $app->get('/categorias', CategoryController::class . ':findAll');
-    $app->get('/categorias/{id}', CategoryController::class . ':findById');
-    $app->post('/categorias', CategoryController::class . ':insert');
-    $app->delete('/categorias/{id}', CategoryController::class . ':remove');
+    $app->group('/categorias', function (RouteCollectorProxy $group) {
+        $group->get('', CategoryController::class . ':findAll');
+        $group->get('/{id}', CategoryController::class . ':findById');
+        $group->post('', CategoryController::class . ':insert');
+        $group->put('/{id}', CategoryController::class . ':update');
+        $group->delete('/{id}', CategoryController::class . ':remove');
+    })->add(new JsonBodyParserMiddleware());
 };

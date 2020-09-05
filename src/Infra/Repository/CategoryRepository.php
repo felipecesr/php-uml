@@ -15,26 +15,13 @@ class CategoryRepository implements ICategoryRepository
         $this->connection = $connection;
     }
 
-    public function _allCategories(): array
+    public function save(Category $category): bool
     {
-        $query = 'SELECT * FROM categorias';
-        $stmt = $this->connection->query($query);
-
-        return $this->hydrateCategoryList($stmt);
-    }
-
-    private function hydrateCategoryList(\PDOStatement $stmt): array
-    {
-        $categoryDataList = $stmt->fetchAll();
-        $categorias = [];
-        foreach ($categoryDataList as $categoryData) {
-            $categorias[] = new Category(
-                $categoryData['id'],
-                $categoryData['nome']
-            );
+        if ($category->getId() === null) {
+            return $this->insert($category);
         }
 
-        return $categorias;
+        return $this->update($category);
     }
 
     public function insert(Category $category)
@@ -53,20 +40,20 @@ class CategoryRepository implements ICategoryRepository
         $stmt = $this->connection->prepare($query);
 
         $data = $stmt->execute([
-            ':id'   => $category->id,
+            ':id'   => $category->getId(),
             ':name' => $category->getName()
         ]);
 
         return $data;
     }
 
-    public function remove(int $id)
+    public function remove(Category $category)
     {
         $query = 'DELETE FROM categorias WHERE id = :id';
         $stmt = $this->connection->prepare($query);
 
         return $stmt->execute([
-            ':id'   => $id
+            ':id'   => $category->getId()
         ]);
     }
 
@@ -106,7 +93,7 @@ class CategoryRepository implements ICategoryRepository
         return array_merge($categories);
     }
 
-    public function findById(int $id)
+    public function findById(int $id): Category
     {
         $query = 'SELECT categorias.id,
                          categorias.nome,

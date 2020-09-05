@@ -27,26 +27,50 @@ class CategoryController
 
     public function findById(Request $request, Response $response, $args): Response
     {
-        $data = $this->repository->findById($args['id']);
-        $payload = json_encode($data);
+        $category = $this->repository->findById($args['id']);
+        $payload = json_encode($category);
+
+        $status = (is_null($category)) ? 204 : 200;
+
+        $response->getBody()->write($payload);
+        return $response
+                 ->withHeader('Content-Type', 'application/json')
+                 ->withStatus($status);
+    }
+
+    public function insert(Request $request, Response $response): Response
+    {
+        $requestBody = $request->getParsedBody();
+        $category = new Category(null, $requestBody['name']);
+        $payload = json_encode($category);
+
+        $this->repository->insert($category);
 
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    public function insert(Request $request, Response $response): Response
+    public function update(Request $request, Response $response, $args): Response
     {
-        $data = $request->getParsedBody();
-        $category = new Category(null, $data['name']);
-        $this->repository->insert($category);
-        $response->getBody()->write(json_encode($category));
-        return $response;
+        $requestBody = $request->getParsedBody();
+
+        $category = $this->repository->findById($args['id']);
+        $category->setName($requestBody['name']);
+
+        $payload = json_encode($category);
+
+        $this->repository->update($category);
+
+        $status = (is_null($category)) ? 204 : 200;
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json')->withStatus($status);
     }
 
     public function remove(Request $request, Response $response, $args): Response
     {
-        $id = intval($args['id']);
-        $this->repository->remove($id);
+        $category = $this->repository->findById($args['id']);
+        $this->repository->remove($category);
         return $response;
     }
 }

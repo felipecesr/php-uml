@@ -25,6 +25,11 @@ class Category implements \JsonSerializable
         return $this->name;
     }
 
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
     public function addProduct(Product $product): void
     {
         $this->products[] = $product;
